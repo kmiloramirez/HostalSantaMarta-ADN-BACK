@@ -1,0 +1,23 @@
+jasypt:
+   encryptor:
+      password: ${jasyptpwd:adn-hostel}
+      algorithm: PBEWithMD5AndDES
+
+server:
+   port: 
+   servlet:
+      context-path: /hostal
+      session:
+         timeout: 21600s
+
+spring:
+   datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbcUrl: jdbc:mysql://localhost:3306/hostal?allowPublicKeyRetrieval=true&useSSL=true
+      username: root
+      password: ENC(LdL6t4yYQs2AthiZ4mbfKg==)
+      hikari:
+         poolName: pool
+
+
