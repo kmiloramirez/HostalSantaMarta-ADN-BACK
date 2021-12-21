@@ -1,28 +1,30 @@
 @Library('ceiba-jenkins-library@master') _
 pipeline{
-	// any -> tomaria slave 5 u 8
-	// Para mobile se debe especificar el slave -> {label 'Slave_Mac'}
-	// Para proyectos de arus se debe tomar el slave 6 o 7 -> {label 'Slave6'} o {label 'Slave7'}
-    agent any
+
+    agent {
+        label 'Slave_Induccion'
+    }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        gitLabConnection('GitCeiba')
+    }
+
+    tools {
+        jdk 'JDK11_Centos'
     }
 
     environment {
         PROJECT_PATH_BACK = 'hostal'
+        BRANCH_NAME ='main'
     }
 
     triggers {
         // @yearly, @annually, @monthly, @weekly, @daily, @midnight, and @hourly o definir un intervalo. Ej: H */4 * * 1-5
-        pollSCM('') //define un intervalo regular en el que Jenkins debería verificar los cambios de fuente nuevos
+        pollSCM('@hourly') //define un intervalo regular en el que Jenkins debería verificar los cambios de fuente nuevos
     }
 
-    tools {
-        jdk ''
-    }
+
 
     // Parametros disponibles en jenkins
      /*parameters{
@@ -39,7 +41,7 @@ pipeline{
                 echo '------------>Checkout desde Git Microservicio<------------'
                 //Esta opción se usa para el checkout sencillo de un microservicio
                 gitCheckout(
-                    urlProject:'',
+                    urlProject:'https://github.com/kmiloramirez/HostalSantaMarta-ADN-BACK.git',
                     branchProject: '${BRANCH_NAME}', 
                 )
 
