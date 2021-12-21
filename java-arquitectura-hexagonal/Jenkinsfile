@@ -1,18 +1,14 @@
 @Library('ceiba-jenkins-library@master') _
 pipeline{
 
-    agent {
-        label 'Slave_Induccion'
-    }
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
+        gitLabConnection('GitCeiba')
     }
 
-    tools {
-        jdk 'JDK11_Centos'
-    }
 
     environment {
         PROJECT_PATH_BACK = 'hostal'
@@ -21,10 +17,12 @@ pipeline{
 
     triggers {
         // @yearly, @annually, @monthly, @weekly, @daily, @midnight, and @hourly o definir un intervalo. Ej: H */4 * * 1-5
-        pollSCM('@hourly') //define un intervalo regular en el que Jenkins debería verificar los cambios de fuente nuevos
+        pollSCM('') //define un intervalo regular en el que Jenkins debería verificar los cambios de fuente nuevos
     }
 
-
+    tools {
+        jdk 'JDK11_Centos'
+    }
 
     // Parametros disponibles en jenkins
      /*parameters{
